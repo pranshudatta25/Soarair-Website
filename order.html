@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<!-- Start Cart Section -->
+<div class="cart-section mt-5">
+    <div class="container px-4">
+        <!-- section title -->
+        <div class="row mb-5">
+            <div class="col">
+                <h2 class="section-title">Cart</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="order-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Unit $</th>
+                                <th class="product-price">Unit PTS</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for product in order.products %}
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <img src="{{url_for('static', filename='img/'+product.image1)}}"
+                                        alt="{{product.name}}" class="img-fluid img-thumbnail">
+                                    <!-- style="max-width: 50%!important; max-height: 30% !important;"> -->
+                                </td>
+                                <td class="product-name">
+                                    <h2 class="h6 text-black">{{product.name}}</h2>
+                                </td>
+                                <td>{{product.price}}</td>
+                                <td>{{product.points}}</td>
+                                <td>
+                                    <form method="POST" action="{{url_for('main.deleteorderitem')}}">
+                                        <input type="hidden" id="id" name="id" value="{{product.id}}">
+                                        <input type="submit" value="X" class="btn btn-primary mb-3">
+                                </td>
+                                </form>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button and navigations -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row mb-5 d-flex justify-content-center">
+                    <div class="col-md-3 col-sm-6 mb-3 mb-md-0 text-center">
+                        <a href="{{ url_for('main.deleteorder') }}">
+                            <button class="btn btn-primary btn-sm">Delete Cart</button>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3 mb-md-0 text-center">
+                        <a href="{{ url_for('main.index', _anchor='categoryList') }}">
+                            <button class="btn btn-primary btn-sm">Shop More</button>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 text-center">
+                        <a href="{{ url_for('main.checkout', total_cost=cost, total_points = point) }}">
+                            <button class="btn btn-primary btn-sm">Checkout</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Cart Section -->
+{% endblock %}

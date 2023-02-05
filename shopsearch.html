@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="product-section px-4">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col">
+                <h2 class="section-title">Search Results: {{keyword}}</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="card-deck">
+                {% for product in products%}
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5">
+                    <div class="card shadow">
+                        <div class="inner">
+                            <img class="card-img-top" src="{{url_for('static', filename='img/'+product.image1)}}"
+                                alt="{{product.name}}">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{product.name|truncate(45)}}</h5>
+                            <p class="card-text">{{product.description|truncate(70)}}</p>
+                            <p>
+                                <!-- Product ratings -->
+                            <div class="product-rating-section">
+                                <span>{{product.rating}}</span>
+                                <span class="fa fa-star checked"></span>
+                                <span>'s</span>
+                            </div>
+                            <!-- End product ratings -->
+                            <h5 class="price-tag">${{product.price}} <span>or</span> {{product.points}} PTS</h5>
+                            </p>
+                            <a href="{{ url_for('main.product', category=product.category_id, productid=product.id) }}"
+                                class="btn btn-sm btn-secondary py-2 mb-2">View More</a>
+                            <form action="{{ url_for('main.order') }}">
+                                <input type="hidden" id="product_id" name="product_id" value="{{product.id}}">
+                                <input type="submit" class="btn btn-secondary mt-4" value="Buy Now">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

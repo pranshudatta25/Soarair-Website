@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="container px-4 my-5">
+    <div class="row">
+        <div class="col-md-12 text-center pt-5">
+            <h1 class="display-3 text-black">Sorry</h1>
+            <p class="lead mb-5">The server has encountered an error. Please try again in a while.</p>
+            <p><a href="{{ url_for('main.index') }}" class="btn btn-sm py-2 btn-primary">Back to Home</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

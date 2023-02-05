@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<div class="hero">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="col-md-4">
+                <div class="intro-excerpt">
+                    <h1>Soarair <span class="d-block">Merchandise</span></h1>
+                    <p class="mb-4">
+                        Shop our exclusive kids line of luggage, fashion, toys and more using your Soarair Loyalty
+                        Points.
+                        Choose a treat to inspire a young adventurer.
+                    </p>
+                    <a href="#categoryList" class="btn btn-light">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block main %}
+<!-- Start New Arrivals Section -->
+<div class="arrivals-section">
+    <div class="container px-5">
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <h2 class="section-title">New Arrivals</h2>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for arrival in newarrivals%}
+            <div class="col-12 col-sm-6 col-md-4 col-xl-2 mb-4 mb-md-0">
+                <div class="item-entry">
+                    <a href="{{ url_for('main.product', category=arrival.category_id, productid=arrival.id) }}"
+                        class="item-thumbnail"><img src="{{url_for('static', filename='img/'+arrival.image1)}}"
+                            width="100%" height="40%" alt="Image" class="img-fluid"></a>
+                    <div class="item-desc">
+                        <h3><a
+                                href="{{ url_for('main.product', category=arrival.category_id, productid=arrival.id) }}"><strong>{{arrival.name|truncate(30)}}</strong></a>
+                        </h3>
+                        <!-- Product ratings -->
+                        <div class="product-rating-section">
+                            <span>{{arrival.rating}}</span>
+                            <span class="fa fa-star checked"></span>
+                            <span>'s</span>
+                        </div>
+                        <!-- End product ratings -->
+                        <h3 class="price-tag">${{arrival.price}} <span>or</span> {{arrival.points}} PTS</h3>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- End New Arrivals Section -->
+
+<!-- Start Product DIYs Section -->
+<div class="planediy-section">
+    <div class="container px-5">
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <h2 class="section-title">What's On</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="imgs-grid">
+                    <div class="grid grid-1"><img src="{{url_for('static', filename='img/diy2.jpg')}}" alt="planeimage">
+                    </div>
+                    <div class="grid grid-2"><img src="{{url_for('static', filename='img/diy1.jpg')}}" alt="planeimage">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 ps-lg-5">
+                <h1 class="section-title mb-4">Design your own planes</h1>
+                <p>Keep your kids busy this holiday with fun and educational plane modelling and crafting activities to
+                    spark imagination!</p>
+                <a href="#categoryList" class="btn btn-primary">Check out DIYs Here</a>
+            </div>
+            <div class="col-lg-3 ps-lg-5">
+                <div class="globe-img">
+                    <img src="{{url_for('static', filename='img/Icons/globe.png')}}" alt="Image" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Product DIYs Section -->
+
+<!-- Start Browse Category Section -->
+<div class="category-section" id="categoryList">
+    <div class="container px-5">
+        <div class="row mb-5">
+            <div class="col-sm-5">
+                <h2 class="section-title">Browse Merchandise Range</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <div class="card-deck">
+                {% for category in categories%}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card shadow">
+                        <div class="inner">
+                            <img class="card-img-top" src="{{url_for('static', filename='img/'+category.image)}}"
+                                alt="{{category.name}}">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{category.name}}</h5>
+                            <p class="card-text">
+                                {{category.description}} </p>
+                            <a href="{{ url_for('main.shop', categoryid=category.id) }}" class="btn btn-secondary">View
+                                More</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Browse Category Section -->
+
+<!-- Start Ordering info section  -->
+<div class="ordering-info-section">
+    <div class="container px-4 text-center">
+        <h4>Order Tracking</h4>
+        <p class="mb-4">
+            Follow your package from clicking the order button to shipment,
+            so you know exactly when it will arrive at your doorstep.
+        </p>
+        <h4>Express Ordering</h4>
+        <p class="mb-4">
+            Reorder any of your past purchases with a few quick clicks.
+            Save your address information to make new orders ASAP.
+        </p>
+    </div>
+</div>
+{% endblock %}

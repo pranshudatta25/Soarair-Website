@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="product-section px-4">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col">
+                {% for x in category%}
+                <h2 class="section-title">{{x.name}}</h2>
+                {% endfor %}
+                <hr>
+                <div class="d-lg-flex pt-2 row justify-content-center">
+                    <!-- ratio select -->
+                    <div class="form-check form-check-inline align-items-center my-2 mx-2 mr-lg-2 filter bg-warning border">
+                        {% for c in category%}
+                        <a href="{{ url_for('main.shopnew', categoryid=c.id) }}">
+                            <!-- <input class=" form-check-input" type="radio" name="inlineRadioOptions"
+                                    id="inlineRadio1" value="option1"> -->
+                            {% endfor %}
+                            <label class="form-check-label" for="inlineRadio1"> New Arrivals</label>
+                        </a>
+                        <!-- </button> -->
+                    </div>
+                    <div class="form-check form-check-inline align-items-center my-2 mx-2 mr-lg-2 filter bg-warning border">
+                        <!-- <input class="form-check-input ml-3" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                            value="option2"> -->
+                        {% for i in category%}
+                        <a href="{{ url_for('main.shophighrate', categoryid=i.id) }}">
+                            {% endfor %}
+                            <label class="form-check-label" for="inlineRadio2"> Highest Rated</label>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="card-deck">
+                {% for product in products%}
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5">
+                    <div class="card shadow">
+                        <div class="inner">
+                            <img class="card-img-top" src="{{url_for('static', filename='img/'+product.image1)}}"
+                                alt="{{product.name}}">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{product.name|truncate(45)}}</h5>
+                            <p class="card-text">{{product.description|truncate(70)}}</p>
+                            <p>
+                                <!-- Product ratings -->
+                            <div class="product-rating-section">
+                                <span>{{product.rating}}</span>
+                                <span class="fa fa-star checked"></span>
+                                <span>'s</span>
+                            </div>
+                            <!-- End product ratings -->
+                            <h5 class="price-tag">${{product.price}} <span>or</span> {{product.points}} PTS</h5>
+                            </p>
+                            {% for i in category%}
+                            <a href="{{ url_for('main.product', category=i.id, productid=product.id) }}"
+                                class="btn btn-sm btn-secondary py-2 mb-2 mt-2">View More</a>
+                            {% endfor %}
+                            <form action="{{ url_for('main.order') }}">
+                                <input type="hidden" id="product_id" name="product_id" value="{{product.id}}">
+                                <input type="submit" class="btn btn-secondary py-2 mt-2" value="Buy Now">
+                            </form>
+                        </div> 
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

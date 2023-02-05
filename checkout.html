@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block main %}
+<div class="checkout-section">
+    <div class="container px-4 my-5">
+        <!-- section title -->
+        <div class="row">
+            <div class="col">
+                <h2 class="section-title">Checkout</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6 mb-5 mb-md-0">
+                <h2 class="h3 mb-3">Billing Details</h2>
+                <div class="p-3 p-lg-5 border">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            {{wtf.quick_form(form)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <h2 class="h3 mb-3">Your Order</h2>
+                        <div class="p-3 p-lg-5 border">
+                            <table class="table checkout-table mb-5">
+                                <thead>
+                                    <th>Product</th>
+                                    <th>Total ($)</th>
+                                    <th>Total (PTS)</th>
+                                </thead>
+                                <tbody>
+                                    {% for orderitem in order.products%}
+                                    <tr>
+                                        <td>{{orderitem.name}} </td>
+                                        <td>{{orderitem.price}}</td>
+                                        <td>{{orderitem.points}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="text-black font-weight-bold"><strong>Cart Total</strong></td>
+                                        <td class="text-black">{{"$%.2f"|format(tc)}}</td>
+                                        <td class="text-black">{{tp}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
